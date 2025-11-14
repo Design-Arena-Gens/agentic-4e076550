@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic Dartboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        svg {
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Radial gradient for depth -->
+                <radialGradient id="boardGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+                </radialGradient>
+
+                <!-- Shadow for 3D effect -->
+                <filter id="innerShadow">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                    <feOffset dx="0" dy="2" result="offsetblur"/>
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.5"/>
+                    </feComponentTransfer>
+                    <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <!-- Background circle -->
+            <circle cx="300" cy="300" r="290" fill="url(#boardGradient)"/>
+
+            <!-- Number ring background -->
+            <circle cx="300" cy="300" r="280" fill="none" stroke="#000" stroke-width="2"/>
+            <circle cx="300" cy="300" r="250" fill="none" stroke="#000" stroke-width="2"/>
+
+            <!-- Standard dartboard number sequence: 20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5 -->
+            <g id="numbers" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#fff" text-anchor="middle">
+                <text x="300" y="50" dominant-baseline="middle">20</text>
+                <text x="383" y="64" dominant-baseline="middle">1</text>
+                <text x="453" y="108" dominant-baseline="middle">18</text>
+                <text x="496" y="177" dominant-baseline="middle">4</text>
+                <text x="510" y="265" dominant-baseline="middle">13</text>
+                <text x="496" y="353" dominant-baseline="middle">6</text>
+                <text x="453" y="422" dominant-baseline="middle">10</text>
+                <text x="383" y="466" dominant-baseline="middle">15</text>
+                <text x="300" y="480" dominant-baseline="middle">2</text>
+                <text x="217" y="466" dominant-baseline="middle">17</text>
+                <text x="147" y="422" dominant-baseline="middle">3</text>
+                <text x="104" y="353" dominant-baseline="middle">19</text>
+                <text x="90" y="265" dominant-baseline="middle">7</text>
+                <text x="104" y="177" dominant-baseline="middle">16</text>
+                <text x="147" y="108" dominant-baseline="middle">8</text>
+                <text x="217" y="64" dominant-baseline="middle">11</text>
+                <text x="270" y="55" dominant-baseline="middle">14</text>
+                <text x="330" y="55" dominant-baseline="middle">9</text>
+                <text x="410" y="80" dominant-baseline="middle">12</text>
+                <text x="470" y="135" dominant-baseline="middle">5</text>
+            </g>
+
+            <!-- Dartboard scoring areas -->
+            <g id="dartboard">
+                <!-- Define the 20 segments with alternating black and white/red and green -->
+                <!-- Outer segments (single) -->
+                <path d="M 300,300 L 300,50 A 250,250 0 0,1 383.01,64.06 Z" fill="#000"/>
+                <path d="M 300,300 L 383.01,64.06 A 250,250 0 0,1 453.01,107.99 Z" fill="#fff"/>
+                <path d="M 300,300 L 453.01,107.99 A 250,250 0 0,1 496.41,176.79 Z" fill="#000"/>
+                <path d="M 300,300 L 496.41,176.79 A 250,250 0 0,1 510,265 Z" fill="#fff"/>
+                <path d="M 300,300 L 510,265 A 250,250 0 0,1 496.41,353.21 Z" fill="#000"/>
+                <path d="M 300,300 L 496.41,353.21 A 250,250 0 0,1 453.01,422.01 Z" fill="#fff"/>
+                <path d="M 300,300 L 453.01,422.01 A 250,250 0 0,1 383.01,465.94 Z" fill="#000"/>
+                <path d="M 300,300 L 383.01,465.94 A 250,250 0 0,1 300,480 Z" fill="#fff"/>
+                <path d="M 300,300 L 300,480 A 250,250 0 0,1 216.99,465.94 Z" fill="#000"/>
+                <path d="M 300,300 L 216.99,465.94 A 250,250 0 0,1 146.99,422.01 Z" fill="#fff"/>
+                <path d="M 300,300 L 146.99,422.01 A 250,250 0 0,1 103.59,353.21 Z" fill="#000"/>
+                <path d="M 300,300 L 103.59,353.21 A 250,250 0 0,1 90,265 Z" fill="#fff"/>
+                <path d="M 300,300 L 90,265 A 250,250 0 0,1 103.59,176.79 Z" fill="#000"/>
+                <path d="M 300,300 L 103.59,176.79 A 250,250 0 0,1 146.99,107.99 Z" fill="#fff"/>
+                <path d="M 300,300 L 146.99,107.99 A 250,250 0 0,1 216.99,64.06 Z" fill="#000"/>
+                <path d="M 300,300 L 216.99,64.06 A 250,250 0 0,1 300,50 Z" fill="#fff"/>
+
+                <!-- Triple ring (inner thin ring) - alternating red and green -->
+                <path d="M 300,120 L 300,50 A 250,250 0 0,1 383.01,64.06 L 349.21,118.43 A 180,180 0 0,0 300,120 Z" fill="#d00"/>
+                <path d="M 349.21,118.43 L 383.01,64.06 A 250,250 0 0,1 453.01,107.99 L 378.17,159.75 A 180,180 0 0,0 349.21,118.43 Z" fill="#0d0"/>
+                <path d="M 378.17,159.75 L 453.01,107.99 A 250,250 0 0,1 496.41,176.79 L 397.42,207.29 A 180,180 0 0,0 378.17,159.75 Z" fill="#d00"/>
+                <path d="M 397.42,207.29 L 496.41,176.79 A 250,250 0 0,1 510,265 L 408,265 A 180,180 0 0,0 397.42,207.29 Z" fill="#0d0"/>
+                <path d="M 408,265 L 510,265 A 250,250 0 0,1 496.41,353.21 L 397.42,322.71 A 180,180 0 0,0 408,265 Z" fill="#d00"/>
+                <path d="M 397.42,322.71 L 496.41,353.21 A 250,250 0 0,1 453.01,422.01 L 378.17,370.25 A 180,180 0 0,0 397.42,322.71 Z" fill="#0d0"/>
+                <path d="M 378.17,370.25 L 453.01,422.01 A 250,250 0 0,1 383.01,465.94 L 349.21,411.57 A 180,180 0 0,0 378.17,370.25 Z" fill="#d00"/>
+                <path d="M 349.21,411.57 L 383.01,465.94 A 250,250 0 0,1 300,480 L 300,410 A 180,180 0 0,0 349.21,411.57 Z" fill="#0d0"/>
+                <path d="M 300,410 L 300,480 A 250,250 0 0,1 216.99,465.94 L 250.79,411.57 A 180,180 0 0,0 300,410 Z" fill="#d00"/>
+                <path d="M 250.79,411.57 L 216.99,465.94 A 250,250 0 0,1 146.99,422.01 L 221.83,370.25 A 180,180 0 0,0 250.79,411.57 Z" fill="#0d0"/>
+                <path d="M 221.83,370.25 L 146.99,422.01 A 250,250 0 0,1 103.59,353.21 L 202.58,322.71 A 180,180 0 0,0 221.83,370.25 Z" fill="#d00"/>
+                <path d="M 202.58,322.71 L 103.59,353.21 A 250,250 0 0,1 90,265 L 192,265 A 180,180 0 0,0 202.58,322.71 Z" fill="#0d0"/>
+                <path d="M 192,265 L 90,265 A 250,250 0 0,1 103.59,176.79 L 202.58,207.29 A 180,180 0 0,0 192,265 Z" fill="#d00"/>
+                <path d="M 202.58,207.29 L 103.59,176.79 A 250,250 0 0,1 146.99,107.99 L 221.83,159.75 A 180,180 0 0,0 202.58,207.29 Z" fill="#0d0"/>
+                <path d="M 221.83,159.75 L 146.99,107.99 A 250,250 0 0,1 216.99,64.06 L 250.79,118.43 A 180,180 0 0,0 221.83,159.75 Z" fill="#d00"/>
+                <path d="M 250.79,118.43 L 216.99,64.06 A 250,250 0 0,1 300,50 L 300,120 A 180,180 0 0,0 250.79,118.43 Z" fill="#0d0"/>
+
+                <!-- Inner single section -->
+                <circle cx="300" cy="300" r="110" fill="#000"/>
+                <circle cx="300" cy="300" r="110" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
+
+                <!-- Double ring (outer thin ring on inner section) -->
+                <path d="M 300,190 L 300,120 A 180,180 0 0,1 349.21,118.43 L 333.61,185.72 A 110,110 0 0,0 300,190 Z" fill="#d00"/>
+                <path d="M 333.61,185.72 L 349.21,118.43 A 180,180 0 0,1 378.17,159.75 L 348.94,213.17 A 110,110 0 0,0 333.61,185.72 Z" fill="#0d0"/>
+                <path d="M 348.94,213.17 L 378.17,159.75 A 180,180 0 0,1 397.42,207.29 L 354.21,240.11 A 110,110 0 0,0 348.94,213.17 Z" fill="#d00"/>
+                <path d="M 354.21,240.11 L 397.42,207.29 A 180,180 0 0,1 408,265 L 358,265 A 110,110 0 0,0 354.21,240.11 Z" fill="#0d0"/>
+                <path d="M 358,265 L 408,265 A 180,180 0 0,1 397.42,322.71 L 354.21,289.89 A 110,110 0 0,0 358,265 Z" fill="#d00"/>
+                <path d="M 354.21,289.89 L 397.42,322.71 A 180,180 0 0,1 378.17,370.25 L 348.94,316.83 A 110,110 0 0,0 354.21,289.89 Z" fill="#0d0"/>
+                <path d="M 348.94,316.83 L 378.17,370.25 A 180,180 0 0,1 349.21,411.57 L 333.61,344.28 A 110,110 0 0,0 348.94,316.83 Z" fill="#d00"/>
+                <path d="M 333.61,344.28 L 349.21,411.57 A 180,180 0 0,1 300,410 L 300,340 A 110,110 0 0,0 333.61,344.28 Z" fill="#0d0"/>
+                <path d="M 300,340 L 300,410 A 180,180 0 0,1 250.79,411.57 L 266.39,344.28 A 110,110 0 0,0 300,340 Z" fill="#d00"/>
+                <path d="M 266.39,344.28 L 250.79,411.57 A 180,180 0 0,1 221.83,370.25 L 251.06,316.83 A 110,110 0 0,0 266.39,344.28 Z" fill="#0d0"/>
+                <path d="M 251.06,316.83 L 221.83,370.25 A 180,180 0 0,1 202.58,322.71 L 245.79,289.89 A 110,110 0 0,0 251.06,316.83 Z" fill="#d00"/>
+                <path d="M 245.79,289.89 L 202.58,322.71 A 180,180 0 0,1 192,265 L 242,265 A 110,110 0 0,0 245.79,289.89 Z" fill="#0d0"/>
+                <path d="M 242,265 L 192,265 A 180,180 0 0,1 202.58,207.29 L 245.79,240.11 A 110,110 0 0,0 242,265 Z" fill="#d00"/>
+                <path d="M 245.79,240.11 L 202.58,207.29 A 180,180 0 0,1 221.83,159.75 L 251.06,213.17 A 110,110 0 0,0 245.79,240.11 Z" fill="#0d0"/>
+                <path d="M 251.06,213.17 L 221.83,159.75 A 180,180 0 0,1 250.79,118.43 L 266.39,185.72 A 110,110 0 0,0 251.06,213.17 Z" fill="#d00"/>
+                <path d="M 266.39,185.72 L 250.79,118.43 A 180,180 0 0,1 300,120 L 300,190 A 110,110 0 0,0 266.39,185.72 Z" fill="#0d0"/>
+
+                <!-- Bullseye outer (25 points - green) -->
+                <circle cx="300" cy="300" r="16" fill="#0d0" filter="url(#innerShadow)"/>
+
+                <!-- Bullseye inner (50 points - red) -->
+                <circle cx="300" cy="300" r="8" fill="#d00" filter="url(#innerShadow)"/>
+            </g>
+
+            <!-- Wire dividers for realistic look -->
+            <g stroke="#333" stroke-width="1.5" fill="none" opacity="0.8">
+                <circle cx="300" cy="300" r="250"/>
+                <circle cx="300" cy="300" r="180"/>
+                <circle cx="300" cy="300" r="110"/>
+                <circle cx="300" cy="300" r="16"/>
+                <circle cx="300" cy="300" r="8"/>
+
+                <!-- Segment dividers -->
+                <line x1="300" y1="50" x2="300" y2="284"/>
+                <line x1="383.01" y1="64.06" x2="323.81" y2="289.61"/>
+                <line x1="453.01" y1="107.99" x2="338.3" y2="304.23"/>
+                <line x1="496.41" y1="176.79" x2="343.03" y2="324.61"/>
+                <line x1="510" y1="265" x2="336" y2="265"/>
+                <line x1="496.41" y1="353.21" x2="343.03" y2="305.39"/>
+                <line x1="453.01" y1="422.01" x2="338.3" y2="325.77"/>
+                <line x1="383.01" y1="465.94" x2="323.81" y2="310.39"/>
+                <line x1="300" y1="480" x2="300" y2="316"/>
+                <line x1="216.99" y1="465.94" x2="276.19" y2="310.39"/>
+                <line x1="146.99" y1="422.01" x2="261.7" y2="325.77"/>
+                <line x1="103.59" y1="353.21" x2="256.97" y2="305.39"/>
+                <line x1="90" y1="265" x2="264" y2="265"/>
+                <line x1="103.59" y1="176.79" x2="256.97" y2="324.61"/>
+                <line x1="146.99" y1="107.99" x2="261.7" y2="304.23"/>
+                <line x1="216.99" y1="64.06" x2="276.19" y2="289.61"/>
+            </g>
+
+            <!-- Outer rim -->
+            <circle cx="300" cy="300" r="295" fill="none" stroke="#1a1a1a" stroke-width="8"/>
+            <circle cx="300" cy="300" r="291" fill="none" stroke="#4a4a4a" stroke-width="2"/>
+        </svg>
+    </div>
+</body>
+</html>
